@@ -11,7 +11,7 @@ module Que
 
     SQL[:insert_job] =
       %{
-        INSERT INTO public.que_jobs
+        INSERT INTO que_jobs
         (queue, priority, run_at, job_class, args, data)
         VALUES
         (

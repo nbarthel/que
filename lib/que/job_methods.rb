@@ -3,14 +3,14 @@
 module Que
   SQL[:finish_job] =
     %{
-      UPDATE public.que_jobs
+      UPDATE que_jobs
       SET finished_at = now()
       WHERE id = $1::bigint
     }
 
   SQL[:expire_job] =
     %{
-      UPDATE public.que_jobs
+      UPDATE que_jobs
       SET error_count = error_count + 1,
           expired_at = now()
       WHERE id = $1::bigint
@@ -18,13 +18,13 @@ module Que
 
   SQL[:destroy_job] =
     %{
-      DELETE FROM public.que_jobs
+      DELETE FROM que_jobs
       WHERE id = $1::bigint
     }
 
   SQL[:set_error] =
     %{
-      UPDATE public.que_jobs
+      UPDATE que_jobs
       SET error_count          = error_count + 1,
           run_at               = now() + $1::float * '1 second'::interval,
           last_error_message   = left($2::text, 500),

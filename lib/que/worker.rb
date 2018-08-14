@@ -14,7 +14,7 @@ module Que
     SQL[:check_job] =
       %{
         SELECT 1 AS one
-        FROM public.que_jobs
+        FROM que_jobs
         WHERE id = $1::bigint
       }
 

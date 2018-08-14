@@ -60,5 +60,5 @@ require 'que/sequel/model'
 class QueJob < Que::Sequel::Model
 end
 
-QueJob.finished # => #<Sequel::Postgres::Dataset: "SELECT * FROM \"public\".\"que_jobs\" WHERE (\"public\".\"que_jobs\".\"finished_at\" IS NOT NULL)">
+QueJob.finished # => #<Sequel::Postgres::Dataset: "SELECT * FROM \"que_jobs\" WHERE (\"que_jobs\".\"finished_at\" IS NOT NULL)">
 ```

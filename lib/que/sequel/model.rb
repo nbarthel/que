@@ -2,7 +2,7 @@
 
 module Que
   module Sequel
-    QUALIFIED_TABLE = ::Sequel.qualify(:public, :que_jobs)
+    QUALIFIED_TABLE = ::Sequel.qualify(:que_jobs)
 
     class Model < ::Sequel::Model(QUALIFIED_TABLE)
       dataset_module do
@@ -28,7 +28,7 @@ module Que
               {::Sequel.qualify(QUALIFIED_TABLE, :job_class) => job_class},
               {
                 ::Sequel.qualify(QUALIFIED_TABLE, :job_class) => "ActiveJob::QueueAdapters::QueAdapter::JobWrapper",
-                ::Sequel.lit("public.que_jobs.args->0->>'job_class'") => job_class,
+                ::Sequel.lit("que_jobs.args->0->>'job_class'") => job_class,
               }
             )
           )
@@ -39,11 +39,11 @@ module Que
         end
 
         def by_tag(tag)
-          where(::Sequel.lit("public.que_jobs.data @> ?", JSON.dump(tags: [tag])))
+          where(::Sequel.lit("que_jobs.data @> ?", JSON.dump(tags: [tag])))
         end
 
         def by_args(*args)
-          where(::Sequel.lit("public.que_jobs.args @> ?", JSON.dump(args)))
+          where(::Sequel.lit("que_jobs.args @> ?", JSON.dump(args)))
         end
       end
     end

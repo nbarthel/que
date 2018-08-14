@@ -13,7 +13,7 @@ module Que
                  sum((error_count > 0)::int) AS count_errored,
                  max(error_count)            AS highest_error_count,
                  min(run_at)                 AS oldest_run_at
-          FROM public.que_jobs
+          FROM que_jobs
           LEFT JOIN (
             SELECT (classid::bigint << 32) + objid::bigint AS id
             FROM pg_locks
@@ -33,11 +33,11 @@ module Que
           SELECT que_jobs.*,
                  pg.ruby_hostname,
                  pg.ruby_pid
-          FROM public.que_jobs
+          FROM que_jobs
           JOIN (
             SELECT (classid::bigint << 32) + objid::bigint AS id, que_lockers.*
             FROM pg_locks
-            JOIN public.que_lockers USING (pid)
+            JOIN que_lockers USING (pid)
             WHERE locktype = 'advisory'
           ) pg USING (id)
         }
